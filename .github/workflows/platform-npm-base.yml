@@ -28,10 +28,15 @@ on:
         description: "Optional scope for authenticating against scoped registries."
         required: false
         type: string
+      base_ref:
+        description: "Optional scope for authenticating against scoped registries."
+        required: false
+        type: string
+        default: 'main'
 jobs:
   npm:
     runs-on: ubuntu-latest
-    if: inputs.pnpm_version == '7.12.2'
+    if: ${{ github.event.pull_request.base.ref == inputs.base_ref }}
     steps:
       - name: "Checkout Repo"
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 #v3.0.2
@@ -40,15 +45,3 @@ jobs:
         with:
           version: ${{ inputs.pnpm_version }}
 
-  node-ab:
-    runs-on: ubuntu-latest
-    if: inputs.pnpm_version == '7.12.3'
-    steps:
-      - name: "Checkout Repo"
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 #v3.0.2
-
-      - uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd #2.2.4
-        with:
-          version: ${{ inputs.pnpm_version }}
-
-      
