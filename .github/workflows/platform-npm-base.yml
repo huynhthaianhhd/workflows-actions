@@ -80,7 +80,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: "Check eslint & test"
-        if: ${{ github.event_name = 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           pnpm run lint
           pnpm run build
